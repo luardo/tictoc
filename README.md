@@ -13,6 +13,17 @@ Implement the game mechanics using a reasonable organization of components
 Write a complete unit test for at least one component
 Style the app at your own discretion
 
+## Notes and review
+
+This is a simple tic tac toe game on vue js. I have implemented a eventBus to pass events from the child child component to the smart component.
+
+Things I would have like to add but I could due lack of time:
+
+* We have player 1 and player 2, in this case I would have like to add a Model player, and create two instances for a object with properties player: name, score, cellsSelected, symbol
+* Styling: There is a lot of posible improvements in terms of style (active state, hover, etc), however because of lack of time I focused in the logic.
+* Test: I create just a user flow test. A lot of assertions could have been made, however some basics are implemented
+* Components: I would have like to add more modularization of the elements. The score I would have put it in a separate component, elements such as notifications (You win, Its a draw, etc), Buttons in a separate
+
 ## Project setup
 
 ```
