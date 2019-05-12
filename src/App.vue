@@ -1,17 +1,17 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <TicToc/>
   </div>
 </template>
 
 <script>
 import HelloWorld from "./components/HelloWorld.vue";
+import TicToc from "./components/TicToc.vue";
 
 export default {
   name: "app",
   components: {
-    HelloWorld
+    TicToc
   }
 };
 </script>
@@ -24,5 +24,6 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+  box-sizing: border-box;
 }
 </style>
