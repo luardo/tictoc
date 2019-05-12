@@ -1,6 +1,6 @@
 <template>
   <div class="grid">
-    <div class="grid__cell" v-for="cell in cellsCount">
+    <div class="grid__cell" v-for="cell in cellsCount" :key="cell">
       <GridCell
         :player="turn"
         :cellKey="cell"

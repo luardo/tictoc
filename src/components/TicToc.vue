@@ -19,7 +19,7 @@
       class="button button--green"
       v-if="isMatchOver || !started"
       @click="play()"
-    >{{ gameCount === 0 ? "Start a new game" : "Play again"}}</button>
+    >{{ round === 0 ? "Start a new game" : "Play again"}}</button>
   </div>
 </template>
 <script>
@@ -35,10 +35,10 @@ export default {
       totalCells: 9,
       totalEmptyCells: 0,
       gameTitle: "Tic Toc Game",
-      gameCount: 0,
+      round: 0,
       started: false,
       winResult: [],
-      turn: Math.round(Math.random() * 1 + 0) === 0,
+      turn: null,
       playersSelection: {
         x: [],
         o: []
@@ -48,12 +48,12 @@ export default {
       winCombinations: [
         [1, 2, 3],
         [4, 5, 6],
-        [7, 8, 9], // rows
+        [7, 8, 9],
         [1, 4, 7],
         [2, 5, 8],
-        [3, 6, 9], // columns
+        [3, 6, 9],
         [1, 5, 9],
-        [3, 5, 7] // diagonals
+        [3, 5, 7]
       ]
     };
   },
@@ -80,7 +80,7 @@ export default {
   },
   watch: {
     playersSelection: {
-      handler: function(selectedCells) {
+      handler(selectedCells) {
         this.winResult =
           this.findWinnerCombination(selectedCells[this.currentPlayerId]) || [];
         if (!this.winResult.length > 0) {
@@ -92,6 +92,11 @@ export default {
     win(value) {
       if (value) {
         this.setWinner();
+      }
+    },
+    isDraw(value) {
+      if (value) {
+        this.setInitialPlayer();
       }
     }
   },
@@ -106,7 +111,7 @@ export default {
     play() {
       this.reset();
       this.started = true;
-      this.gameCount++;
+      this.round++;
       this.totalEmptyCells = this.totalCells;
     },
     stop() {
@@ -121,6 +126,12 @@ export default {
         return matches === 3 ? combination : false;
       });
     },
+    setInitialPlayer() {
+      this.turn = this.getRandomBoolean();
+    },
+    getRandomBoolean() {
+      return Math.round(Math.random() * 1 + 0) === 0;
+    },
     setWinner() {
       if (this.turn) {
         this.scorePlayer1 = this.scorePlayer1 + 1;
@@ -128,6 +139,9 @@ export default {
         this.scorePlayer2 = this.scorePlayer2 + 1;
       }
     }
+  },
+  created() {
+    this.setInitialPlayer();
   },
   mounted() {
     EventBus.$on("cellClicked", value => {
