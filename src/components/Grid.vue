@@ -12,7 +12,6 @@
 </template>
 <script>
 import GridCell from "./GridCell.vue";
-import { EventBus } from "../event-bus.js";
 
 export default {
   name: "Grid",
@@ -44,13 +43,19 @@ export default {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  width: 100%;
+  align-content: center;
+  width: 400px;
+  margin: 0 auto;
 
   &__cell {
     height: 50px;
     margin: 5px;
     background-color: gray;
     width: 30%;
+    height: auto;
+    padding-bottom: 30%;
+    z-index: 1;
+    position: relative;
   }
 }
 </style>

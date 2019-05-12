@@ -1,11 +1,37 @@
 <template>
   <div class="tic-toc">
-    <h1>{{gameTitle}}</h1>
-    <h3>Score:</h3>Player 1:
-    <strong>{{scorePlayer1}}</strong>
-    Player 2:
-    <strong>{{scorePlayer2}}</strong>
-    <div class="tic-toc__player" v-if="!isMatchOver">{{playerName}}</div>
+    <h1>
+      {{gameTitle}}
+      <span v-if="round">Round: {{round}}</span>
+    </h1>
+    <div class="tic-toc__score" v-if="started">
+      <div>
+        <br>Player 1:
+        <strong>{{scorePlayer1}}</strong>
+      </div>
+      <div>
+        <br>Player 2:
+        <strong>{{scorePlayer2}}</strong>
+      </div>
+    </div>
+    <div class="tic-toc__player" v-if="!isMatchOver && started">
+      <h4>{{playerName}}</h4>
+    </div>
+
+    <button
+      class="button button--green"
+      v-if="isMatchOver || !started"
+      @click="play()"
+    >{{ round === 0 ? "Start a new game" : "Play again"}}</button>
+
+    <div v-if="win">
+      <h3>{{playerName}} WINS!!!</h3>
+    </div>
+
+    <div v-if="isDraw">
+      <h3>No match, it's a draw :/</h3>
+    </div>
+
     <div class="tic-toc__wrapper">
       <Grid
         :cellsCount="totalCells"
@@ -15,11 +41,6 @@
         :highlightCells="winResult"
       />
     </div>
-    <button
-      class="button button--green"
-      v-if="isMatchOver || !started"
-      @click="play()"
-    >{{ round === 0 ? "Start a new game" : "Play again"}}</button>
   </div>
 </template>
 <script>
@@ -160,6 +181,17 @@ export default {
 
   &__wrapper {
     display: flex;
+  }
+
+  &__score {
+    text-align: left;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__player {
+    text-transform: uppercase;
   }
 }
 
